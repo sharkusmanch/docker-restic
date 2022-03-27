@@ -1,12 +1,16 @@
 FROM alpine
 
 ARG VERSION
-ARG VERSION_R='r0'
 
-RUN apk add --no-cache curl mariadb-client restic=${VERSION}-${VERSION_R} bash tzdata unzip fuse && \
+COPY ./install.sh /tmp/install.sh
+
+RUN apk add --no-cache curl mariadb-client bash tzdata unzip fuse bzip2 && \
+    export RESTIC_VERSION="${VERSION}" && \
+    bash /tmp/install.sh && \
+    rm /tmp/install.sh && \
     adduser --disabled-password restic && \
     curl https://rclone.org/install.sh | bash && \
-    apk del unzip bash curl
+    apk del unzip bash curl bzip2
 
 USER restic
 
