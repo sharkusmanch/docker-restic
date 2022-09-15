@@ -5,8 +5,7 @@ on:
     - cron: "0 * * * *"
   push:
     branches:
-      - develop
-      # - master
+      - master
 
 jobs:
   build:
@@ -38,14 +37,6 @@ jobs:
 
       - name: Check Out Repo
         uses: actions/checkout@v2
-          
-      # - name: Check Out Repo goodtiding5/docker-nitter
-      #   uses: actions/checkout@v2
-      #   if: steps.cache.outputs.cache-hit != 'true'
-      #   with:
-      #     repository: "goodtiding5/docker-nitter"
-      #     ref: 'master'
-      #     path: 'nitter-git'
       
       - name: Login to GHCR
         if: steps.cache.outputs.cache-hit != 'true'
