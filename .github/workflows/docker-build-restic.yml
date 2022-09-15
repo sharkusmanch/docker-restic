@@ -73,4 +73,5 @@ jobs:
           push: true
           tags: ghcr.io/sharkusmanch/restic:${{ steps.restic.outputs.release }}
           build-args:
-            - VERSION=${{ steps.restic.outputs.release }}
+            - name: VERSION
+              value: ${{ steps.restic.outputs.release }}
