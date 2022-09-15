@@ -19,8 +19,8 @@ case "$OS_type" in
     ;;
 esac
 
-echo curl -L https://github.com/restic/restic/releases/download/$VERSION/restic_"$VERSION"_linux_$OS_type.bz2 --output restic.bz2
-curl -L https://github.com/restic/restic/releases/download/$VERSION/restic_"$VERSION"_linux_$OS_type.bz2 --output restic.bz2
+echo curl -L https://github.com/restic/restic/releases/download/v$VERSION/restic_"$VERSION"_linux_$OS_type.bz2 --output restic.bz2
+curl -L https://github.com/restic/restic/releases/download/v$VERSION/restic_"$VERSION"_linux_$OS_type.bz2 --output restic.bz2
 bzip2 -d restic.bz2
 mv restic /usr/bin/
 chmod ugo+x /usr/bin/restic
