@@ -1,0 +1,76 @@
+name: Docker build restic image
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  push:
+    branches:
+      - develop
+      # - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get latest release of restic
+        id: restic
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          repository: restic/restic
+          excludes: prerelease, draft
+
+      # - uses: actions/cache@v2
+      #   id: cache
+      #   with:
+      #     path: nitter
+      #     key: ${{ runner.os }}-v11-${{ steps.get-latest-commit.outputs.commit }}-${{ hashFiles('**/lockfiles') }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        # if: steps.cache.outputs.cache-hit != 'true'
+        with:
+          platforms: all
+
+      - name: Check Out Repo
+        uses: actions/checkout@v2
+          
+      # - name: Check Out Repo goodtiding5/docker-nitter
+      #   uses: actions/checkout@v2
+      #   if: steps.cache.outputs.cache-hit != 'true'
+      #   with:
+      #     repository: "goodtiding5/docker-nitter"
+      #     ref: 'master'
+      #     path: 'nitter-git'
+      
+      - name: Login to GHCR
+        # if: steps.cache.outputs.cache-hit != 'true'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GHCR_USERNAME }}
+          password: ${{ secrets.GHCR_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        # if: steps.cache.outputs.cache-hit != 'true'
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          version: latest
+
+      - name: Set up build timestamp
+        # if: steps.cache.outputs.cache-hit != 'true'
+        run: echo "timestamp=$(date +%Y%m%d)" >> $GITHUB_ENV
+
+      - name: Build and push docker image
+        # if: steps.cache.outputs.cache-hit != 'true'
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64/v8,linux/arm/v7
+          push: true
+          tags: ghcr.io/sharkusmanch/restic:${{ steps.restic.outputs.release }}
+          build-args:
+            VERSION: ${{ steps.restic.outputs.release }}
