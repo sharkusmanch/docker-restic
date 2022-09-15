@@ -22,7 +22,7 @@ jobs:
 
       - name: Set VERSION
         id: vars
-        run: echo ::set-output name=VERSION::$(echo ${{ steps.restic.outputs.release }} | sed 's/^v//')}
+        run: echo ::set-output name=VERSION::$(echo ${{ steps.restic.outputs.release }} | sed 's/^v//')
 
       # - uses: actions/cache@v2
       #   id: cache
