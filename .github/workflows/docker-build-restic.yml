@@ -19,15 +19,16 @@ jobs:
           repository: restic/restic
           excludes: prerelease, draft
 
-      - name: Set VERSION
-        id: vars
-        run: echo ::set-output name=VERSION::$(echo ${{ steps.restic.outputs.release }} | sed 's/^v//')
-
       - uses: actions/cache@v2
         id: cache
         with:
           path: restic
           key: ${{ runner.os }}-v11-${{ steps.restic.outputs.release }}
+
+      - name: Set VERSION
+        if: steps.cache.outputs.cache-hit != 'true'
+        id: vars
+        run: echo ::set-output name=VERSION::$(echo ${{ steps.restic.outputs.release }} | sed 's/^v//')
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
