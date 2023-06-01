@@ -10,7 +10,7 @@ RUN apk add --no-cache curl mariadb-client bash tzdata unzip fuse bzip2 && \
     rm /tmp/install.sh && \
     adduser --disabled-password restic && \
     curl https://rclone.org/install.sh | bash && \
-    apk del unzip bash curl bzip2
+    apk del unzip bash curl bzip2 jq
 
 USER restic
 
