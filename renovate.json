@@ -21,7 +21,7 @@
     {
       "fileMatch": ["VERSION"],
       "matchStrings": [
-        "[\"']?(?<currentValue>.+?)[\"']"
+        "^(?<currentValue>.+?)$"
       ],
       "depNameTemplate": "restic/restic",
       "datasourceTemplate": "github-releases"
