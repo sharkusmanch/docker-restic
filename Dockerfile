@@ -1,6 +1,6 @@
 FROM debian
 
-ARG VERSION=0.16.3
+ARG VERSION="0.16.3"
 
 COPY ./install.sh /tmp/install.sh
 
