@@ -4,7 +4,7 @@ ARG VERSION
 
 COPY ./install.sh /tmp/install.sh
 
-RUN apt-get update -y && apt-get install curl mariadb-client tzdata unzip fuse bzip2 -y && \
+RUN apt-get update -y && apt-get install curl mariadb-client tzdata unzip fuse bzip2 jq -y && \
     export RESTIC_VERSION="${VERSION}" && \
     bash /tmp/install.sh && \
     rm /tmp/install.sh && \
