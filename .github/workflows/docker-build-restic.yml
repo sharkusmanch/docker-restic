@@ -64,4 +64,4 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8,linux/arm/v7
           push: true
           tags: ghcr.io/sharkusmanch/restic:latest, ghcr.io/sharkusmanch/restic:${{ steps.vars.outputs.VERSION }}
-          build-args: VERSION=${{ steps.vars.outputs.VERSION }}
+          # build-args: VERSION=${{ steps.vars.outputs.VERSION }}
