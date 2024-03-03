@@ -7,10 +7,11 @@
     {
       "matchDatasources": ["github-releases"],
       "matchPackageNames": ["restic/restic"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
       "automerge": true
     }
   ],
-  "customManagers": [
+  "regexManagers": [
     {
       "fileMatch": ["^Dockerfile$"],
       "matchStrings": [
