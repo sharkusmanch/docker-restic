@@ -1,8 +1,8 @@
 name: Docker build restic image
 
 on:
-  schedule:
-    - cron: "0 * * * *"
+  # schedule:
+  #   - cron: "0 * * * *"
   push:
     branches:
       - master
@@ -12,27 +12,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get latest release of restic
-        id: restic
-        uses: pozetroninc/github-action-get-latest-release@master
-        with:
-          repository: restic/restic
-          excludes: prerelease, draft
+      # - name: Get latest release of restic
+      #   id: restic
+      #   uses: pozetroninc/github-action-get-latest-release@master
+      #   with:
+      #     repository: restic/restic
+      #     excludes: prerelease, draft
 
-      - uses: actions/cache@v2
-        id: cache
-        with:
-          path: restic
-          key: ${{ runner.os }}-v11-${{ steps.restic.outputs.release }}
+      # - uses: actions/cache@v2
+      #   id: cache
+      #   with:
+      #     path: restic
+      #     key: ${{ runner.os }}-v11-${{ steps.restic.outputs.release }}
 
-      - name: Set VERSION
-        if: steps.cache.outputs.cache-hit != 'true'
-        id: vars
-        run: echo ::set-output name=VERSION::$(echo ${{ steps.restic.outputs.release }} | sed 's/^v//')
+      # - name: Set VERSION
+      #   #if: steps.cache.outputs.cache-hit != 'true'
+      #   id: vars
+      #   run: echo ::set-output name=VERSION::$(echo ${{ steps.restic.outputs.release }} | sed 's/^v//')
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
-        if: steps.cache.outputs.cache-hit != 'true'
+        #if: steps.cache.outputs.cache-hit != 'true'
         with:
           platforms: all
 
@@ -40,7 +40,7 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Login to GHCR
-        if: steps.cache.outputs.cache-hit != 'true'
+        #if: steps.cache.outputs.cache-hit != 'true'
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
@@ -48,18 +48,14 @@ jobs:
           password: ${{ secrets.GHCR_PASSWORD }}
 
       - name: Set up Docker Buildx
-        if: steps.cache.outputs.cache-hit != 'true'
+        #if: steps.cache.outputs.cache-hit != 'true'
         id: buildx
         uses: docker/setup-buildx-action@v1
         with:
           version: latest
 
-      - name: Set up build timestamp
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: echo "timestamp=$(date +%Y%m%d)" >> $GITHUB_ENV
-
       - name: Build and push docker image
-        if: steps.cache.outputs.cache-hit != 'true'
+        #if: steps.cache.outputs.cache-hit != 'true'
         id: docker_build
         uses: docker/build-push-action@v2
         with:
