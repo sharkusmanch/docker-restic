@@ -13,9 +13,9 @@
   ],
   "regexManagers": [
     {
-      "fileMatch": ["^Dockerfile$"],
+      "fileMatch": ["/Dockerfile$"],
       "matchStrings": [
-        "ARG VERSION=(?<currentValue>.*?)"
+        "ARG VERSION=[\"']?(?<currentValue>.+?)[\"']?\\s+"
       ],
       "depNameTemplate": "restic/restic",
       "datasourceTemplate": "github-releases"
