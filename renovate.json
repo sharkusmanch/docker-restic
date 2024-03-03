@@ -24,6 +24,7 @@
       "matchStrings": [
         "ARG VERSION=(?<currentValue>.*?)"
       ],
+      "depNameTemplate": "restic/restic",
       "datasourceTemplate": "github-releases"
     }
   ]
