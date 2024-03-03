@@ -7,23 +7,17 @@
     {
       "matchDatasources": ["github-releases"],
       "matchPackageNames": ["restic/restic"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
       "automerge": true
     }
   ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "fileMatch": ["^Dockerfile$"],
-      "matchStrings": [
-        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sENV .*?_VERSION=(?<currentValue>.*)\\s"
-      ],
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
-    },
+  "regexManagers": [
     {
       "fileMatch": ["^Dockerfile$"],
       "matchStrings": [
         "ARG VERSION=(?<currentValue>.*?)"
       ],
+      "depNameTemplate": "restic/restic",
       "datasourceTemplate": "github-releases"
     }
   ]
