@@ -37,7 +37,7 @@ jobs:
           platforms: all
 
       - name: Check Out Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
       
       - name: Login to GHCR
         #if: steps.cache.outputs.cache-hit != 'true'
